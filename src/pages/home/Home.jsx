@@ -11,6 +11,7 @@ export default function Home() {
   const [maxDuration, setMaxDuration] = useState([]);
   const [workFromHomeChecked, setWorkFromHomeChecked] = useState(false);
   const [internationalWork, setInternationalWork] = useState(false);
+  
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
