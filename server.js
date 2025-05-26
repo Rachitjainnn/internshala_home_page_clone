@@ -7,7 +7,7 @@ app.use(cors());
 
 app.get('/api/internships', async (req, res) => {
   try {
-    const response = await fetch('https://internshala.com/hiring/search');
+    const response = await fetch(`${import.meta.env.VITE_INTERNSHALA_API_URL}`);
     const data = await response.json();
     
     res.json(Object.values(data.internships_meta))
