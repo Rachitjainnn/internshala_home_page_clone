@@ -95,9 +95,9 @@ export default function FilterBox({profileValue, setProfileValue, locationValue,
             
 
             {showMore && (
-                <div>
+                <div className='overflow-x-hidden'>
 
-                    <div className='flex flex-col gap-2 items-start justify-start mt-6 mb-2 w-full'>
+                    <div className='flex flex-col gap-2 items-start justify-start mt-6 mb-2'>
                         <p>Starting from (or after)</p>
                         <DatePicker
                             selected={startDate}

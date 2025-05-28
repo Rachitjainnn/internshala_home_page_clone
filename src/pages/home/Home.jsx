@@ -3,6 +3,8 @@ import { Filter } from 'lucide-react';
 import FilterBox from '../../components/filter/FilterBox';
 import EnrollCard from '../../components/internship/Enroll';
 import InternshipList from '../../components/internship/InternshipList';
+import useFilteredInternships from '../../utils/useFilteredInternships';
+import { SliderContext } from '../../utils/sliderContext';
 
 export default function Home() {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
@@ -11,14 +13,23 @@ export default function Home() {
   const [maxDuration, setMaxDuration] = useState([]);
   const [workFromHomeChecked, setWorkFromHomeChecked] = useState(false);
   const [internationalWork, setInternationalWork] = useState(false);
-  
+  const [stipendValue, setStipendValue] = useState([0]);
+
+  const { filteredInternships, loading, error } = useFilteredInternships({
+  profileValue,
+  locationValue,
+  maxDuration,
+  workFromHomeChecked,
+  internationalWork,
+  stipendValue
+});
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
 
       {/* Header */}
       <div className="text-center mt-8">
-        <h1 className="text-xl font-semibold mb-2">10 Total Internships</h1>
+        <h1 className="text-xl font-semibold mb-2">{filteredInternships.length} Total Internships</h1>
         <p className="text-gray-600 mb-4">Latest Summer Internships in India</p>
       </div>
 
@@ -39,6 +50,7 @@ export default function Home() {
         {/* Desktop Filter */}
         <div className="hidden lg:block w-1/5 mt-4">
           <div className="sticky top-4">
+            <SliderContext.Provider value={{ stipendValue, setStipendValue }}>
             <FilterBox
               profileValue={profileValue}
               setProfileValue={setProfileValue}
@@ -51,6 +63,7 @@ export default function Home() {
               internationalWork={internationalWork}
               setInternationalWork={setInternationalWork}
             />
+            </SliderContext.Provider> 
 
           </div>
         </div>
@@ -59,11 +72,9 @@ export default function Home() {
         <div className="flex flex-col w-full lg:w-2xl text-center">
           <EnrollCard />
           <InternshipList
-            profileValue={profileValue}
-            locationValue={locationValue}
-            maxDuration={maxDuration}
-            workFromHomeChecked={workFromHomeChecked}
-            internationalWork={internationalWork}
+            filteredInternships={filteredInternships}
+            loading={loading}
+            error={error}
           />
 
         </div>
@@ -79,6 +90,7 @@ export default function Home() {
             >
               ✕
             </button>
+            <SliderContext.Provider value={{ stipendValue, setStipendValue }}>
             <FilterBox
               profileValue={profileValue}
               setProfileValue={setProfileValue}
@@ -91,7 +103,8 @@ export default function Home() {
               internationalWork={internationalWork}
               setInternationalWork={setInternationalWork}
             />
-
+             </SliderContext.Provider> 
+            
           </div>
         </div>
       )}

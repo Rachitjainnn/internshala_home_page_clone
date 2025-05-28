@@ -1,9 +1,12 @@
 import * as Slider from '@radix-ui/react-slider';
-import { useState } from 'react';
+import { useSliderContext } from '../../utils/sliderContext';
+
 
 export default function SalarySlider() {
-	const [value, setValue] = useState([0])
 	const marks = [0, 2000, 4000, 6000, 8000, 10000];
+	const { stipendValue, setStipendValue } = useSliderContext();
+	console.log('stipendValue', stipendValue);
+	
 
 	return (
 		<div className="w-full max-w-md px-4 py-6">
@@ -11,8 +14,8 @@ export default function SalarySlider() {
 
 			<Slider.Root
 				className="relative flex items-center select-none touch-none w-full h-6"
-				value={value}
-				onValueChange={setValue}
+				value={stipendValue}
+				onValueChange={setStipendValue}
 				max={10000}
 				step={2000}
 			>
@@ -27,7 +30,7 @@ export default function SalarySlider() {
 
 			<div className="flex justify-between mt-2 text-sm text-gray-500 font-medium">
 				{marks.map((mark, idx) => (
-					<span key={idx} className={`${mark === value[0] ?'text-gray-600':'text-gray-400'}`}>{mark === 0 ? '0' : `${mark / 1000}K`}</span>
+					<span key={idx} className={`${mark === stipendValue[0] ?'text-gray-600':'text-gray-400'}`}>{mark === 0 ? '0' : `${mark / 1000}K`}</span>
 				))}
 			</div>
 		</div>
